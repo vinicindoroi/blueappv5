@@ -6,7 +6,7 @@ import { HeaderMenu } from '@/components/HeaderMenu';
 import { BottomIconsBar } from '@/components/BottomIconsBar';
 import { SectionHeader } from '@/components/SectionHeader';
 import { UsefulContainer } from '@/components/UsefulContainer';
-import { Mail, Clock, ChevronRight, Headphones, CircleHelp as HelpCircle } from 'lucide-react-native';
+import { Mail, Clock, ChevronRight, Headphones } from 'lucide-react-native';
 import { theme } from '@/constants/theme';
 
 export default function HelpCenterScreen() {
@@ -59,10 +59,6 @@ export default function HelpCenterScreen() {
     } catch (error) {
       Alert.alert('Email Address', text);
     }
-  };
-
-  const handleAppTutorial = () => {
-    router.push('/(tabs)/help');
   };
 
   return (
@@ -170,18 +166,6 @@ export default function HelpCenterScreen() {
               <Text style={styles.faqAnswer}>
                 Yes, your data automatically syncs across all your devices when you're signed in to your account.
               </Text>
-            </View>
-          </View>
-
-          {/* Quick Actions - Only App Tutorial */}
-          <View style={styles.quickActionsSection}>
-            <Text style={styles.sectionTitle}>Quick Actions</Text>
-            
-            <View style={styles.quickActionsGrid}>
-              <TouchableOpacity style={styles.quickActionCard} onPress={handleAppTutorial}>
-                <HelpCircle size={24} color={theme.colors.primary[600]} />
-                <Text style={styles.quickActionText}>App Tutorial</Text>
-              </TouchableOpacity>
             </View>
           </View>
 
@@ -358,32 +342,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: theme.colors.gray[600],
     lineHeight: 20,
-  },
-  quickActionsSection: {
-    marginBottom: 32,
-  },
-  quickActionsGrid: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  quickActionCard: {
-    backgroundColor: theme.colors.white,
-    padding: 20,
-    borderRadius: 12,
-    alignItems: 'center',
-    shadowColor: theme.colors.gray[900],
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-    minWidth: 120,
-  },
-  quickActionText: {
-    fontFamily: 'Inter-Medium',
-    fontSize: 14,
-    color: theme.colors.gray[700],
-    marginTop: 8,
-    textAlign: 'center',
   },
   footerSection: {
     backgroundColor: theme.colors.primary[50],
