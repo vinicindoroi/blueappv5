@@ -42,11 +42,10 @@ export const HamburgerMenu = ({ onMenuPress }: HamburgerMenuProps) => {
   const footerTranslateY = useSharedValue(20);
   const footerOpacity = useSharedValue(0);
 
-  // Menu items with unified tutorial navigation
+  // Menu items with dedicated Help Center
   const menuItems = [
     { icon: HelpCircle, label: 'How to Use BlueApp', route: '/(tabs)/help' },
-    { icon: HelpCircle, label: 'App Tutorial', route: '/(tabs)/help' }, // Same route as above
-    { icon: HeadphonesIcon, label: 'Help Center', route: '/(tabs)/help-center' },
+    { icon: HeadphonesIcon, label: 'Help Center', route: '/(tabs)/help-center' }, // Dedicated Help Center
     { icon: Settings, label: 'Settings', route: '/(tabs)/settings' },
   ];
 
@@ -297,7 +296,7 @@ export const HamburgerMenu = ({ onMenuPress }: HamburgerMenuProps) => {
               </Animated.View>
             )}
 
-            {/* Menu Items - How to Use BlueApp, App Tutorial, Help Center, and Settings */}
+            {/* Menu Items - How to Use BlueApp, Help Center, and Settings */}
             <Animated.View style={[styles.menuItems, menuItemsAnimatedStyle]}>
               {menuItems.map((item, index) => {
                 const Icon = item.icon;
