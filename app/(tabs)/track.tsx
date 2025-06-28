@@ -10,7 +10,6 @@ import { theme } from '@/constants/theme';
 import { useDoseStore } from '@/stores/doseStore';
 import { formatDate } from '@/utils/dateUtils';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import Slider from '@react-native-community/slider';
 
 interface CustomReminder {
@@ -48,14 +47,6 @@ export default function TrackScreen() {
   const [newReminderLabel, setNewReminderLabel] = useState('');
   const [newReminderTime, setNewReminderTime] = useState(new Date());
   const [showTimePicker, setShowTimePicker] = useState(false);
-
-  // Confirmation feedback states
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [confirmationMessage, setConfirmationMessage] = useState('');
-
-  // Animation values for confirmation
-  const confirmationScale = useSharedValue(0);
-  const confirmationOpacity = useSharedValue(0);
 
   // Check for daily reset on component mount and focus
   useEffect(() => {
@@ -209,38 +200,10 @@ export default function TrackScreen() {
     }
   }, []);
 
-  const showConfirmationFeedback = (message: string) => {
-    setConfirmationMessage(message);
-    setShowConfirmation(true);
-    
-    // Animate in
-    confirmationOpacity.value = withSpring(1);
-    confirmationScale.value = withSequence(
-      withSpring(1.1),
-      withSpring(1)
-    );
-    
-    // Auto hide after 3 seconds
-    setTimeout(() => {
-      confirmationOpacity.value = withSpring(0);
-      confirmationScale.value = withSpring(0, {}, () => {
-        runOnJS(setShowConfirmation)(false);
-      });
-    }, 3000);
-  };
-
   const trackAllSymptoms = () => {
     // Save the daily symptoms entry
     saveDailySymptoms(symptomRatings);
-    
-    // Show confirmation feedback
-    showConfirmationFeedback(`All symptoms have been saved successfully! 🎉`);
   };
-
-  const confirmationAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: confirmationOpacity.value,
-    transform: [{ scale: confirmationScale.value }],
-  }));
 
   // Check if user has already answered today
   const hasAnsweredToday = hasAnsweredSymptomsToday();
@@ -362,13 +325,15 @@ export default function TrackScreen() {
             </View>
             
             {hasAnsweredToday ? (
-              // Show "Already answered today" state
-              <View style={styles.alreadyAnsweredContainer}>
-                <View style={styles.alreadyAnsweredContent}>
-                  <Check size={24} color={theme.colors.success[600]} />
-                  <Text style={styles.alreadyAnsweredTitle}>You've already responded today!</Text>
-                  <Text style={styles.alreadyAnsweredSubtitle}>
-                    Come back tomorrow to track your symptoms again
+              // Show "Already answered today" state with saved message
+              <View style={styles.savedMessageContainer}>
+                <View style={styles.savedMessageContent}>
+                  <View style={styles.savedMessageIcon}>
+                    <Check size={32} color={theme.colors.success[600]} />
+                  </View>
+                  <Text style={styles.savedMessageTitle}>Symptoms Saved Successfully! ✅</Text>
+                  <Text style={styles.savedMessageSubtitle}>
+                    Your daily symptom tracking has been recorded. Come back tomorrow to track again.
                   </Text>
                 </View>
                 
@@ -449,18 +414,6 @@ export default function TrackScreen() {
 
       {/* Bottom Icons Bar */}
       <BottomIconsBar />
-
-      {/* Confirmation Feedback Overlay */}
-      {showConfirmation && (
-        <View style={styles.confirmationOverlay}>
-          <Animated.View style={[styles.confirmationCard, confirmationAnimatedStyle]}>
-            <View style={styles.confirmationIcon}>
-              <Check size={24} color={theme.colors.white} />
-            </View>
-            <Text style={styles.confirmationText}>{confirmationMessage}</Text>
-          </Animated.View>
-        </View>
-      )}
 
       {/* Schedule Configuration Modal */}
       <Modal
@@ -814,7 +767,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     lineHeight: 18,
   },
-  alreadyAnsweredContainer: {
+  savedMessageContainer: {
     backgroundColor: theme.colors.white,
     borderRadius: 12,
     padding: 20,
@@ -825,19 +778,29 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 2,
   },
-  alreadyAnsweredContent: {
+  savedMessageContent: {
     alignItems: 'center',
     marginBottom: 20,
   },
-  alreadyAnsweredTitle: {
-    fontFamily: 'Inter-SemiBold',
-    fontSize: 18,
+  savedMessageIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: theme.colors.success[50],
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: theme.colors.success[200],
+  },
+  savedMessageTitle: {
+    fontFamily: 'Inter-Bold',
+    fontSize: 20,
     color: theme.colors.success[700],
-    marginTop: 12,
     marginBottom: 8,
     textAlign: 'center',
   },
-  alreadyAnsweredSubtitle: {
+  savedMessageSubtitle: {
     fontFamily: 'Inter-Regular',
     fontSize: 14,
     color: theme.colors.gray[600],
@@ -973,47 +936,6 @@ const styles = StyleSheet.create({
     color: theme.colors.gray[600],
     textAlign: 'center',
     fontStyle: 'italic',
-  },
-  confirmationOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    zIndex: 1000,
-  },
-  confirmationCard: {
-    backgroundColor: theme.colors.white,
-    borderRadius: 16,
-    padding: 24,
-    alignItems: 'center',
-    marginHorizontal: 32,
-    shadowColor: theme.colors.gray[900],
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25,
-    shadowRadius: 16,
-    elevation: 12,
-    borderWidth: 2,
-    borderColor: theme.colors.success[200],
-  },
-  confirmationIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: theme.colors.success[500],
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
-  },
-  confirmationText: {
-    fontFamily: 'Inter-SemiBold',
-    fontSize: 16,
-    color: theme.colors.gray[800],
-    textAlign: 'center',
-    lineHeight: 22,
   },
   modalOverlay: {
     flex: 1,
