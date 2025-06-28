@@ -42,10 +42,10 @@ export const HamburgerMenu = ({ onMenuPress }: HamburgerMenuProps) => {
   const footerTranslateY = useSharedValue(20);
   const footerOpacity = useSharedValue(0);
 
-  // Menu items with Help Center added
+  // Menu items with dedicated Help Center
   const menuItems = [
     { icon: HelpCircle, label: 'How to Use BlueApp', route: '/(tabs)/help' },
-    { icon: HeadphonesIcon, label: 'Help Center', route: '/(tabs)/help' }, // Added Help Center
+    { icon: HeadphonesIcon, label: 'Help Center', route: '/(tabs)/help-center' }, // Dedicated Help Center
     { icon: Settings, label: 'Settings', route: '/(tabs)/settings' },
   ];
 
