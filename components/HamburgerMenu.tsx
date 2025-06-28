@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Dimensions, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Menu, X, User, Settings, CircleHelp as HelpCircle, LogOut, HeadphonesIcon } from 'lucide-react-native';
+import { Menu, X, User, Settings, CircleHelp as HelpCircle, LogOut, Headphones as HeadphonesIcon } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { theme } from '@/constants/theme';
 import { BlueDropsLogo } from '@/components/BlueDropsLogo';
