@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Dimensions, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Menu, X, User, Settings, CircleHelp as HelpCircle, LogOut } from 'lucide-react-native';
+import { Menu, X, User, Settings, CircleHelp as HelpCircle, LogOut, HeadphonesIcon } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
 import { theme } from '@/constants/theme';
 import { BlueDropsLogo } from '@/components/BlueDropsLogo';
@@ -42,9 +42,10 @@ export const HamburgerMenu = ({ onMenuPress }: HamburgerMenuProps) => {
   const footerTranslateY = useSharedValue(20);
   const footerOpacity = useSharedValue(0);
 
-  // Menu items com nome atualizado
+  // Menu items with Help Center added
   const menuItems = [
     { icon: HelpCircle, label: 'How to Use BlueApp', route: '/(tabs)/help' },
+    { icon: HeadphonesIcon, label: 'Help Center', route: '/(tabs)/help' }, // Added Help Center
     { icon: Settings, label: 'Settings', route: '/(tabs)/settings' },
   ];
 
@@ -295,7 +296,7 @@ export const HamburgerMenu = ({ onMenuPress }: HamburgerMenuProps) => {
               </Animated.View>
             )}
 
-            {/* Menu Items - How to Use BlueApp e Settings */}
+            {/* Menu Items - How to Use BlueApp, Help Center, and Settings */}
             <Animated.View style={[styles.menuItems, menuItemsAnimatedStyle]}>
               {menuItems.map((item, index) => {
                 const Icon = item.icon;
