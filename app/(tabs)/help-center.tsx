@@ -1,15 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Linking, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { HeaderMenu } from '@/components/HeaderMenu';
 import { BottomIconsBar } from '@/components/BottomIconsBar';
 import { SectionHeader } from '@/components/SectionHeader';
 import { UsefulContainer } from '@/components/UsefulContainer';
-import { Mail, MessageCircle, Phone, Clock, ChevronRight, Headphones, CircleHelp as HelpCircle } from 'lucide-react-native';
+import { Mail, Clock, ChevronRight, Headphones, CircleHelp as HelpCircle } from 'lucide-react-native';
 import { theme } from '@/constants/theme';
 
 export default function HelpCenterScreen() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
 
   const handleEmailPress = async () => {
     const email = 'support@magicbluedrops.com';
@@ -59,20 +61,8 @@ export default function HelpCenterScreen() {
     }
   };
 
-  const handleChatPress = () => {
-    Alert.alert(
-      'Live Chat',
-      'Live chat support is coming soon! For now, please use email support for the fastest response.',
-      [{ text: 'OK' }]
-    );
-  };
-
-  const handlePhonePress = () => {
-    Alert.alert(
-      'Phone Support',
-      'Phone support is available for premium users. Please contact us via email to schedule a call.',
-      [{ text: 'OK' }]
-    );
+  const handleAppTutorial = () => {
+    router.push('/(tabs)/help');
   };
 
   return (
@@ -104,7 +94,7 @@ export default function HelpCenterScreen() {
             </Text>
           </View>
 
-          {/* Contact Options */}
+          {/* Contact Options - Only Email Support */}
           <View style={styles.contactSection}>
             <Text style={styles.sectionTitle}>Contact Support</Text>
             
@@ -116,30 +106,6 @@ export default function HelpCenterScreen() {
                 <Text style={styles.contactTitle}>Email Support</Text>
                 <Text style={styles.contactDescription}>support@magicbluedrops.com</Text>
                 <Text style={styles.contactSubtext}>Response within 24 hours</Text>
-              </View>
-              <ChevronRight size={20} color={theme.colors.gray[400]} />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.contactCard} onPress={handleChatPress}>
-              <View style={styles.contactIcon}>
-                <MessageCircle size={24} color={theme.colors.secondary[600]} />
-              </View>
-              <View style={styles.contactContent}>
-                <Text style={styles.contactTitle}>Live Chat</Text>
-                <Text style={styles.contactDescription}>Chat with our support team</Text>
-                <Text style={styles.contactSubtext}>Coming soon</Text>
-              </View>
-              <ChevronRight size={20} color={theme.colors.gray[400]} />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.contactCard} onPress={handlePhonePress}>
-              <View style={styles.contactIcon}>
-                <Phone size={24} color={theme.colors.success[600]} />
-              </View>
-              <View style={styles.contactContent}>
-                <Text style={styles.contactTitle}>Phone Support</Text>
-                <Text style={styles.contactDescription}>Schedule a call with our team</Text>
-                <Text style={styles.contactSubtext}>Premium users only</Text>
               </View>
               <ChevronRight size={20} color={theme.colors.gray[400]} />
             </TouchableOpacity>
@@ -207,29 +173,14 @@ export default function HelpCenterScreen() {
             </View>
           </View>
 
-          {/* Quick Actions */}
+          {/* Quick Actions - Only App Tutorial */}
           <View style={styles.quickActionsSection}>
             <Text style={styles.sectionTitle}>Quick Actions</Text>
             
             <View style={styles.quickActionsGrid}>
-              <TouchableOpacity style={styles.quickActionCard}>
+              <TouchableOpacity style={styles.quickActionCard} onPress={handleAppTutorial}>
                 <HelpCircle size={24} color={theme.colors.primary[600]} />
                 <Text style={styles.quickActionText}>App Tutorial</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity style={styles.quickActionCard}>
-                <Mail size={24} color={theme.colors.secondary[600]} />
-                <Text style={styles.quickActionText}>Report Bug</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity style={styles.quickActionCard}>
-                <MessageCircle size={24} color={theme.colors.success[600]} />
-                <Text style={styles.quickActionText}>Feedback</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity style={styles.quickActionCard}>
-                <Phone size={24} color={theme.colors.warning[600]} />
-                <Text style={styles.quickActionText}>Emergency</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -413,14 +364,11 @@ const styles = StyleSheet.create({
   },
   quickActionsGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
+    justifyContent: 'center',
   },
   quickActionCard: {
-    flex: 1,
-    minWidth: '45%',
     backgroundColor: theme.colors.white,
-    padding: 16,
+    padding: 20,
     borderRadius: 12,
     alignItems: 'center',
     shadowColor: theme.colors.gray[900],
@@ -428,10 +376,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 2,
+    minWidth: 120,
   },
   quickActionText: {
     fontFamily: 'Inter-Medium',
-    fontSize: 12,
+    fontSize: 14,
     color: theme.colors.gray[700],
     marginTop: 8,
     textAlign: 'center',
