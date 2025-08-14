@@ -50,7 +50,8 @@ export default function HomeScreen() {
     setStreak(getStreak());
     
     // Get compliance data
-    setComplianceData(getWeeklyComplianceData());
+    const weeklyData = getWeeklyComplianceData();
+    setComplianceData(Array.isArray(weeklyData) ? weeklyData : [0, 0, 0, 0, 0, 0, 0]);
     
     // Calculate next dose time based on user's configured schedule
     calculateNextDoseTime(todayCompleted);

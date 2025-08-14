@@ -10,12 +10,15 @@ export const WeeklyComplianceChart = ({ data }: WeeklyComplianceChartProps) => {
   const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const maxHeight = 100; // maximum height of bar in percentage
   
+  // Ensure data is always an array with default values
+  const safeData = data && Array.isArray(data) ? data : [0, 0, 0, 0, 0, 0, 0];
+  
   return (
     <View style={styles.container}>
       <View style={styles.chart}>
-        {data.map((value, index) => {
+        {safeData.map((value, index) => {
           const height = (value / 2) * maxHeight; // 2 is max possible value (2 doses per day)
-          const isToday = index === data.length - 1;
+          const isToday = index === safeData.length - 1;
           return (
             <View key={index} style={styles.barContainer}>
               <View style={styles.barWrapper}>

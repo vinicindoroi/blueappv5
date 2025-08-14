@@ -31,7 +31,7 @@ export default function ProgressScreen() {
       return [0, 0, 0, 0];
     }
 
-    const last4Weeks = [];
+    const last4Weeks: number[] = [];
     const now = new Date();
     
     for (let i = 3; i >= 0; i--) {
@@ -49,6 +49,11 @@ export default function ProgressScreen() {
       last4Weeks.push(Math.round(percentage));
     }
     
+    // Ensure we always return exactly 4 values
+    while (last4Weeks.length < 4) {
+      last4Weeks.unshift(0);
+    }
+    
     return last4Weeks;
   };
 
@@ -63,7 +68,7 @@ export default function ProgressScreen() {
     const totalDoses = doses.length;
     
     // Energy improves based on total doses taken and consistency
-    return complianceData.map((compliance, index) => {
+    const energyData = complianceData.map((compliance, index) => {
       // Base energy starts at 0 and increases with total doses
       const doseBonus = Math.min(totalDoses * 0.1, 2.0); // Up to 2.0 points from total doses
       
@@ -78,6 +83,13 @@ export default function ProgressScreen() {
       
       return Math.round(energyLevel * 10) / 10; // Round to 1 decimal place
     });
+    
+    // Ensure we always return exactly 4 values
+    while (energyData.length < 4) {
+      energyData.unshift(0);
+    }
+    
+    return energyData;
   };
 
   // Calculate symptom data based on actual user input from daily entries
@@ -87,7 +99,7 @@ export default function ProgressScreen() {
     }
 
     // Get last 6 weeks of data
-    const last6Weeks = [];
+    const last6Weeks: number[] = [];
     const now = new Date();
     
     for (let i = 5; i >= 0; i--) {
@@ -121,6 +133,11 @@ export default function ProgressScreen() {
         const previousValue = last6Weeks.length > 0 ? last6Weeks[last6Weeks.length - 1] : 1;
         last6Weeks.push(previousValue);
       }
+    }
+    
+    // Ensure we always return exactly 6 values
+    while (last6Weeks.length < 6) {
+      last6Weeks.unshift(1);
     }
     
     return last6Weeks;

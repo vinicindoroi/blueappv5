@@ -209,10 +209,12 @@ export const useDoseStore = create<DoseStore>()(
       },
       
       getWeeklyComplianceData: () => {
-        const data: number[] = [];
         const doses = get().doses;
         const schedules = get().schedules;
         const targetDosesPerDay = schedules.length || 2;
+        
+        // Initialize with default array to prevent undefined errors
+        const data: number[] = [];
         
         // Get last 7 days
         const today = new Date();
@@ -234,7 +236,13 @@ export const useDoseStore = create<DoseStore>()(
           data.push(compliance);
         }
         
-        return data;
+        // Ensure we always return exactly 7 values
+        while (data.length < 7) {
+          data.unshift(0);
+        }
+        
+        // Ensure we don't return more than 7 values
+        return data.slice(-7);
       },
       
       addSymptom: (symptomId: number, rating: number, date = new Date()) => {
