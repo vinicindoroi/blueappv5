@@ -217,6 +217,8 @@ export const HelpBalloon = () => {
 };
 
 const styles = StyleSheet.create({
+      }
+  )
   balloonContainer: {
     position: 'absolute',
     right: 16,
