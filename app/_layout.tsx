@@ -166,6 +166,21 @@ export default function RootLayout() {
 
   // Determine if HelpBalloon should be shown
   const shouldShowHelpBalloon = () => {
+    // Don't show if fonts aren't loaded
+    if (!fontsLoaded && !fontError) {
+      return false;
+    }
+    
+    // Don't show if auth isn't initialized
+    if (!isInitialized) {
+      return false;
+    }
+    
+    // Don't show if user isn't authenticated
+    if (!isAuthenticated) {
+      return false;
+    }
+    
     // Don't show on login page
     if (pathname === '/login') {
       return false;
@@ -176,8 +191,8 @@ export default function RootLayout() {
       return false;
     }
     
-    // Show on all other pages if user is authenticated and system is ready
-    return isAuthenticated && isInitialized;
+    // Show on all other authenticated pages
+    return true;
   };
   if (!fontsLoaded && !fontError) {
     return null;
