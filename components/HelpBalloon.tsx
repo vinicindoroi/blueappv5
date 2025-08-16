@@ -123,31 +123,8 @@ export const HelpBalloon = () => {
   };
 
   const handleProductSupport = async () => {
-    const email = 'support@magicbluedrops.com';
-    const subject = 'BlueDrops Product Support Request';
-    const body = 'Hello BlueApp Support Team,\n\nI need assistance with my BlueDrops order:\n\n[Please select one]\n☐ Product Issue - Describe the problem\n☐ Return Request - Full refund\n☐ Exchange Request - Different product\n☐ Damaged Product - Replacement needed\n\nOrder details:\n- Order date: [Please specify]\n- Tracking number: [If available]\n- Detailed description: [Please explain]\n\nThank you for your assistance!';
-    
-    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    try {
-      const supported = await Linking.canOpenURL(mailtoUrl);
-      if (supported) {
-        await Linking.openURL(mailtoUrl);
-        setIsModalVisible(false);
-      } else {
-        Alert.alert(
-          'Product Support',
-          `Please send an email to: ${email}\n\nSubject: ${subject}`,
-          [{ text: 'OK' }]
-        );
-      }
-    } catch (error) {
-      Alert.alert(
-        'Product Support',
-        `Please send an email to: ${email}\n\nSubject: ${subject}`,
-        [{ text: 'OK' }]
-      );
-    }
+    setIsModalVisible(false);
+    router.replace('/support');
   };
 
   return (
