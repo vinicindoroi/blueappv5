@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Platform, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Platform, Text, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { ArrowLeft, Loader } from 'lucide-react-native';
 import { theme } from '@/constants/theme';
+import { BottomIconsBar } from '@/components/BottomIconsBar';
 
 export default function SupportScreen() {
   const insets = useSafeAreaInsets();
@@ -11,7 +12,11 @@ export default function SupportScreen() {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleBack = () => {
-    router.back();
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace('/(tabs)');
+    }
   };
 
   useEffect(() => {
@@ -67,14 +72,16 @@ export default function SupportScreen() {
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-          <ArrowLeft size={24} color={theme.colors.gray[700]} />
-        </TouchableOpacity>
-        
-        <Text style={styles.headerTitle}>Product Support</Text>
-        
-        <View style={styles.placeholder} />
+      <View style={styles.headerContainer}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+            <ArrowLeft size={24} color={theme.colors.gray[700]} />
+          </TouchableOpacity>
+          
+          <Text style={styles.headerTitle}>Product Support</Text>
+          
+          <View style={styles.placeholder} />
+        </View>
       </View>
 
       {/* Loading Overlay for Web */}
@@ -86,9 +93,12 @@ export default function SupportScreen() {
       )}
 
       {/* WebView Content */}
-      <View style={styles.webViewContainer}>
+      <View style={[styles.webViewContainer, { paddingBottom: insets.bottom + 80 }]}>
         {renderWebViewContent()}
       </View>
+
+      {/* Bottom Icons Bar */}
+      <BottomIconsBar />
     </View>
   );
 }
@@ -98,18 +108,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background,
   },
+  headerContainer: {
+    backgroundColor: theme.colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.gray[200],
+    shadowColor: theme.colors.gray[900],
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.gray[200],
-    backgroundColor: theme.colors.white,
   },
   backButton: {
-    padding: 8,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.gray[100],
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerTitle: {
     fontFamily: 'Inter-SemiBold',
