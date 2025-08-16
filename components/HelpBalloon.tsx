@@ -32,12 +32,18 @@ export const HelpBalloon = () => {
   const scale = useSharedValue(1);
   const opacity = useSharedValue(0.9);
   const pulseScale = useSharedValue(1);
+  const textOpacity = useSharedValue(0);
+  const textTranslateY = useSharedValue(10);
 
   // Entry animation when component mounts
   useEffect(() => {
     // Initial entrance animation
     scale.value = withDelay(1000, withSpring(1, { damping: 15, stiffness: 150 }));
     opacity.value = withDelay(1000, withTiming(1, { duration: 300 }));
+    
+    // Text animation with slight delay after balloon
+    textOpacity.value = withDelay(1200, withTiming(1, { duration: 400 }));
+    textTranslateY.value = withDelay(1200, withSpring(0, { damping: 12, stiffness: 120 }));
     
     // Subtle pulse animation every 10 seconds
     const startPulse = () => {
@@ -64,6 +70,10 @@ export const HelpBalloon = () => {
     opacity: opacity.value,
   }));
 
+  const textAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: textOpacity.value,
+    transform: [{ translateY: textTranslateY.value }],
+  }));
   const handleBalloonPress = () => {
     setIsModalVisible(true);
   };
@@ -114,6 +124,11 @@ export const HelpBalloon = () => {
     <>
       {/* Floating Help Balloon */}
       <Animated.View style={[styles.balloonContainer, { bottom: insets.bottom + 140 }, balloonAnimatedStyle]}>
+        {/* Help Text Above Balloon */}
+        <Animated.View style={[styles.helpTextContainer, textAnimatedStyle]}>
+          <Text style={styles.helpText}>Need Help?</Text>
+        </Animated.View>
+        
         <TouchableOpacity
           style={styles.balloon}
           onPress={handleBalloonPress}
@@ -214,6 +229,25 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     zIndex: 1000,
+    alignItems: 'center',
+  },
+  helpTextContainer: {
+    backgroundColor: theme.colors.gray[800],
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    marginBottom: 8,
+    shadowColor: theme.colors.gray[900],
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  helpText: {
+    fontFamily: 'Inter-Medium',
+    fontSize: 12,
+    color: theme.colors.white,
+    textAlign: 'center',
   },
   balloon: {
     width: 56,
