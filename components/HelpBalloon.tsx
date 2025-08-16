@@ -329,6 +329,32 @@ export const HelpBalloon = () => {
             </ScrollView>
           </View>
         </View>
+      </Modal>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  balloonContainer: {
+    position: 'absolute',
+    right: 20,
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  helpTextContainer: {
+    backgroundColor: theme.colors.gray[800],
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    marginBottom: 8,
+    shadowColor: theme.colors.gray[900],
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  helpText: {
+    fontFamily: 'Inter-Medium',
     fontSize: 12,
     color: theme.colors.white,
     textAlign: 'center',
