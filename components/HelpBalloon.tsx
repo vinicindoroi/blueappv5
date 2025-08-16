@@ -9,7 +9,9 @@ import {
   Video, 
   MessageCircle,
   ChevronRight,
-  Headphones
+  Headphones,
+  CircleAlert,
+  RefreshCw
 } from 'lucide-react-native';
 import { theme } from '@/constants/theme';
 import Animated, { 
@@ -120,6 +122,61 @@ export const HelpBalloon = () => {
     router.push('/(tabs)/help-center');
   };
 
+  const handleProductIssues = async () => {
+    const email = 'support@magicbluedrops.com';
+    const subject = 'BlueDrops Product Issue Report';
+    const body = 'Hello BlueApp Support Team,\n\nI am experiencing an issue with my BlueDrops product:\n\n[Please describe the issue in detail]\n\nProduct details:\n- Order date: [Please specify]\n- Tracking number: [If available]\n- Issue type: [Please describe]\n\nThank you for your assistance!';
+    
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    try {
+      const supported = await Linking.canOpenURL(mailtoUrl);
+      if (supported) {
+        await Linking.openURL(mailtoUrl);
+        setIsModalVisible(false);
+      } else {
+        Alert.alert(
+          'Product Support',
+          `Please send an email to: ${email}\n\nSubject: ${subject}`,
+          [{ text: 'OK' }]
+        );
+      }
+    } catch (error) {
+      Alert.alert(
+        'Product Support',
+        `Please send an email to: ${email}\n\nSubject: ${subject}`,
+        [{ text: 'OK' }]
+      );
+    }
+  };
+
+  const handleReturnsExchanges = async () => {
+    const email = 'support@magicbluedrops.com';
+    const subject = 'BlueDrops Return/Exchange Request';
+    const body = 'Hello BlueApp Support Team,\n\nI would like to request a return/exchange for my BlueDrops order:\n\n[Please select one]\n☐ Return - Full refund\n☐ Exchange - Different product\n☐ Exchange - Damaged product\n\nOrder details:\n- Order date: [Please specify]\n- Tracking number: [If available]\n- Reason: [Please explain]\n\nThank you!';
+    
+    const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    try {
+      const supported = await Linking.canOpenURL(mailtoUrl);
+      if (supported) {
+        await Linking.openURL(mailtoUrl);
+        setIsModalVisible(false);
+      } else {
+        Alert.alert(
+          'Returns & Exchanges',
+          `Please send an email to: ${email}\n\nSubject: ${subject}`,
+          [{ text: 'OK' }]
+        );
+      }
+    } catch (error) {
+      Alert.alert(
+        'Returns & Exchanges',
+        `Please send an email to: ${email}\n\nSubject: ${subject}`,
+        [{ text: 'OK' }]
+      );
+    }
+  };
   return (
     <>
       {/* Floating Help Balloon */}
@@ -157,6 +214,33 @@ export const HelpBalloon = () => {
               </View>
               <TouchableOpacity onPress={handleCloseModal} style={styles.closeButton}>
                 <X size={20} color={theme.colors.gray[500]} />
+              </TouchableOpacity>
+            </View>
+
+            {/* Product Support */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Product Support</Text>
+              
+              <TouchableOpacity style={styles.productCard} onPress={handleProductIssues}>
+                <View style={styles.productIcon}>
+                  <CircleAlert size={20} color={theme.colors.error[600]} />
+                </View>
+                <View style={styles.productContent}>
+                  <Text style={styles.productTitle}>Product Issues</Text>
+                  <Text style={styles.productDescription}>Report problems with your BlueDrops</Text>
+                </View>
+                <ChevronRight size={16} color={theme.colors.gray[400]} />
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.exchangeCard} onPress={handleReturnsExchanges}>
+                <View style={styles.exchangeIcon}>
+                  <RefreshCw size={20} color={theme.colors.warning[600]} />
+                </View>
+                <View style={styles.exchangeContent}>
+                  <Text style={styles.exchangeTitle}>Returns & Exchanges</Text>
+                  <Text style={styles.exchangeDescription}>Request returns or product exchanges</Text>
+                </View>
+                <ChevronRight size={16} color={theme.colors.gray[400]} />
               </TouchableOpacity>
             </View>
 
@@ -441,6 +525,75 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
     fontSize: 12,
     color: theme.colors.secondary[600],
+  },
+  
+  // Product Card Styles
+  productCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.error[50],
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.error[100],
+    marginBottom: 12,
+  },
+  productIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.error[100],
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  productContent: {
+    flex: 1,
+  },
+  productTitle: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+    color: theme.colors.error[800],
+    marginBottom: 2,
+  },
+  productDescription: {
+    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    color: theme.colors.error[600],
+  },
+  
+  // Exchange Card Styles
+  exchangeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.warning[50],
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.warning[100],
+  },
+  exchangeIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.warning[100],
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  exchangeContent: {
+    flex: 1,
+  },
+  exchangeTitle: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+    color: theme.colors.warning[800],
+    marginBottom: 2,
+  },
+  exchangeDescription: {
+    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    color: theme.colors.warning[600],
   },
   
   // Footer
