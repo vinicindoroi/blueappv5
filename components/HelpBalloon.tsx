@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, Linking, Alert, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { useRouter, usePathname } from 'expo-router';
 import { 
   CircleHelp as HelpCircle, 
   X, 
@@ -28,6 +28,7 @@ import Animated, {
 export const HelpBalloon = () => {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const pathname = usePathname();
   const [isModalVisible, setIsModalVisible] = useState(false);
   
   // Animation values
@@ -126,6 +127,11 @@ export const HelpBalloon = () => {
     setIsModalVisible(false);
     router.replace('/support');
   };
+
+  // Don't show the help balloon on login screen
+  if (pathname === '/login') {
+    return null;
+  }
 
   return (
     <>
