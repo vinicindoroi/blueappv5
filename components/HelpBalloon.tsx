@@ -2,7 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, Linking, Alert, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { CircleHelp as HelpCircle, X, Mail, Video, MessageCircle, ChevronRight, Headphones, TriangleAlert as AlertTriangle, RefreshCw } from 'lucide-react-native';
+import { 
+  CircleHelp as HelpCircle, 
+  X, 
+  Mail, 
+  Video, 
+  MessageCircle,
+  ChevronRight,
+  Headphones
+} from 'lucide-react-native';
 import { theme } from '@/constants/theme';
 import Animated, { 
   useSharedValue, 
