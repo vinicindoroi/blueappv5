@@ -17,6 +17,7 @@ import Animated, {
   Easing,
   runOnJS
 } from 'react-native-reanimated';
+import { HelpBalloon } from '@/components/HelpBalloon';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -429,6 +430,9 @@ export default function LoginScreen() {
           )}
         </UsefulContainer>
       </ScrollView>
+      
+      {/* Help Balloon - Always visible */}
+      <HelpBalloon />
     </KeyboardAvoidingView>
   );
 }
