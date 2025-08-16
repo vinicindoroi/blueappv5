@@ -176,6 +176,7 @@ export default function RootLayout() {
         <Stack.Screen name="webview-fullscreen" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
         <Stack.Screen name="package-tracking" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
         <Stack.Screen name="marketplace" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
+        <Stack.Screen name="support" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
         <Stack.Screen name="+not-found" options={{ title: 'Oops!' }} />
       </Stack>
       <StatusBar style="auto" />
