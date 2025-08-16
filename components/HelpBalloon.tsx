@@ -245,7 +245,7 @@ export const HelpBalloon = () => {
             </View>
 
             <ScrollView style={styles.modalContent} showsVerticalScrollIndicator={false}>
-              {/* Quick Actions - Only App Tutorial */}
+              {/* Quick Actions */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Quick Actions</Text>
                 
@@ -294,6 +294,32 @@ export const HelpBalloon = () => {
                 </TouchableOpacity>
               </View>
 
+              {/* Product Support - Moved to the end */}
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Product Support</Text>
+                
+                <TouchableOpacity style={styles.productCard} onPress={handleProductIssues}>
+                  <View style={styles.productIcon}>
+                    <CircleAlert size={20} color={theme.colors.error[600]} />
+                  </View>
+                  <View style={styles.productContent}>
+                    <Text style={styles.productTitle}>Product Issues</Text>
+                    <Text style={styles.productDescription}>Report problems with your BlueDrops</Text>
+                  </View>
+                  <ChevronRight size={16} color={theme.colors.gray[400]} />
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={styles.exchangeCard} onPress={handleReturnsExchanges}>
+                  <View style={styles.exchangeIcon}>
+                    <RefreshCw size={20} color={theme.colors.warning[600]} />
+                  </View>
+                  <View style={styles.exchangeContent}>
+                    <Text style={styles.exchangeTitle}>Returns & Exchanges</Text>
+                    <Text style={styles.exchangeDescription}>Request returns or product exchanges</Text>
+                  </View>
+                  <ChevronRight size={16} color={theme.colors.gray[400]} />
+                </TouchableOpacity>
+              </View>
               {/* Footer */}
               <View style={styles.footer}>
                 <Text style={styles.footerText}>
@@ -303,32 +329,6 @@ export const HelpBalloon = () => {
             </ScrollView>
           </View>
         </View>
-      </Modal>
-    </>
-  );
-};
-
-const styles = StyleSheet.create({
-  balloonContainer: {
-    position: 'absolute',
-    right: 16,
-    zIndex: 1000,
-    alignItems: 'center',
-  },
-  helpTextContainer: {
-    backgroundColor: theme.colors.gray[800],
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    marginBottom: 8,
-    shadowColor: theme.colors.gray[900],
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  helpText: {
-    fontFamily: 'Inter-Medium',
     fontSize: 12,
     color: theme.colors.white,
     textAlign: 'center',
