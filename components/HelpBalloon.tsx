@@ -114,12 +114,12 @@ export const HelpBalloon = () => {
 
   const handleAppTutorial = () => {
     setIsModalVisible(false);
-    router.push('/(tabs)/help'); // Navigate to "How to Use BlueApp"
+    router.replace('/(tabs)/help'); // Navigate to "How to Use BlueApp"
   };
 
   const handleHelpCenter = () => {
     setIsModalVisible(false);
-    router.push('/(tabs)/help-center');
+    router.replace('/(tabs)/help-center');
   };
 
   const handleProductIssues = async () => {
