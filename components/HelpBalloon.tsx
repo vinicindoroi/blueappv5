@@ -9,7 +9,9 @@ import {
   Video, 
   MessageCircle,
   ChevronRight,
-  Headphones
+  Headphones,
+  AlertTriangle,
+  RefreshCw
 } from 'lucide-react-native';
 import { theme } from '@/constants/theme';
 import Animated, { 
@@ -194,6 +196,32 @@ export const HelpBalloon = () => {
                 </TouchableOpacity>
               </View>
 
+              {/* Product Issues */}
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Product Support</Text>
+                
+                <TouchableOpacity style={styles.productCard} onPress={handleEmailSupport}>
+                  <View style={styles.productIcon}>
+                    <AlertTriangle size={20} color={theme.colors.warning[600]} />
+                  </View>
+                  <View style={styles.productContent}>
+                    <Text style={styles.productTitle}>Problemas com o Produto</Text>
+                    <Text style={styles.productDescription}>Report issues or defects</Text>
+                  </View>
+                  <ChevronRight size={16} color={theme.colors.gray[400]} />
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={styles.exchangeCard} onPress={handleEmailSupport}>
+                  <View style={styles.exchangeIcon}>
+                    <RefreshCw size={20} color={theme.colors.secondary[600]} />
+                  </View>
+                  <View style={styles.exchangeContent}>
+                    <Text style={styles.exchangeTitle}>Troca ou Devolução</Text>
+                    <Text style={styles.exchangeDescription}>Exchange or return request</Text>
+                  </View>
+                  <ChevronRight size={16} color={theme.colors.gray[400]} />
+                </TouchableOpacity>
+              </View>
               {/* More Help */}
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>More Help</Text>
@@ -438,6 +466,75 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   helpDescription: {
+    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    color: theme.colors.secondary[600],
+  },
+  
+  // Product Support Card Styles
+  productCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.warning[50],
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.warning[100],
+    marginBottom: 8,
+  },
+  productIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.warning[100],
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  productContent: {
+    flex: 1,
+  },
+  productTitle: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+    color: theme.colors.warning[800],
+    marginBottom: 2,
+  },
+  productDescription: {
+    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    color: theme.colors.warning[600],
+  },
+  
+  // Exchange Card Styles
+  exchangeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.secondary[50],
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: theme.colors.secondary[100],
+  },
+  exchangeIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: theme.colors.secondary[100],
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  exchangeContent: {
+    flex: 1,
+  },
+  exchangeTitle: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 14,
+    color: theme.colors.secondary[800],
+    marginBottom: 2,
+  },
+  exchangeDescription: {
     fontFamily: 'Inter-Regular',
     fontSize: 12,
     color: theme.colors.secondary[600],
