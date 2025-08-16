@@ -139,14 +139,14 @@ export const HelpBalloon = () => {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            {/* Header */}
+              <Text style={styles.sectionTitle}>Product Support</Text>
             <View style={styles.modalHeader}>
-              <View style={styles.headerLeft}>
+              <TouchableOpacity style={styles.productCard} onPress={handleProductIssues}>
                 <View style={styles.headerIcon}>
                   <Headphones size={20} color={theme.colors.primary[600]} />
                 </View>
-                <Text style={styles.modalTitle}>Need Help?</Text>
-              </View>
+                  <Text style={styles.exchangeTitle}>Exchange or Return</Text>
+                  <Text style={styles.exchangeDescription}>Request exchange or return</Text>
               <TouchableOpacity onPress={handleCloseModal} style={styles.closeButton}>
                 <X size={20} color={theme.colors.gray[500]} />
               </TouchableOpacity>
