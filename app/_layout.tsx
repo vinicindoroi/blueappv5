@@ -7,15 +7,13 @@ import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_7
 import { useAuthStore } from '@/stores/authStore';
 import * as SplashScreen from 'expo-splash-screen';
 import { HelpBalloon } from '@/components/HelpBalloon';
-import { usePathname } from 'expo-router';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   useFrameworkReady();
   
-  const { initialize: initializeAuth, isAuthenticated, isInitialized } = useAuthStore();
-  const pathname = usePathname();
+  const { initialize: initializeAuth } = useAuthStore();
 
   const [fontsLoaded, fontError] = useFonts({
     'Inter-Regular': Inter_400Regular,
@@ -164,36 +162,6 @@ export default function RootLayout() {
     }
   }, []);
 
-  // Determine if HelpBalloon should be shown
-  const shouldShowHelpBalloon = () => {
-    // Don't show if fonts aren't loaded
-    if (!fontsLoaded && !fontError) {
-      return false;
-    }
-    
-    // Don't show if auth isn't initialized
-    if (!isInitialized) {
-      return false;
-    }
-    
-    // Don't show if user isn't authenticated
-    if (!isAuthenticated) {
-      return false;
-    }
-    
-    // Don't show on login page
-    if (pathname === '/login') {
-      return false;
-    }
-    
-    // Don't show on index page (loading/splash screen)
-    if (pathname === '/' || pathname === '/index') {
-      return false;
-    }
-    
-    // Show on all other authenticated pages
-    return true;
-  };
   if (!fontsLoaded && !fontError) {
     return null;
   }
@@ -211,7 +179,7 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" options={{ title: 'Oops!' }} />
       </Stack>
       <StatusBar style="auto" />
-      {shouldShowHelpBalloon() && <HelpBalloon />}
+      <HelpBalloon />
     </>
   );
 }
