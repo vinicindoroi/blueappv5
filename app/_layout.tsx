@@ -177,7 +177,7 @@ export default function RootLayout() {
     }
     
     // Show on all other pages if user is authenticated and system is ready
-    return isAuthenticated && isInitialized && (fontsLoaded || fontError);
+    return isAuthenticated && isInitialized;
   };
   if (!fontsLoaded && !fontError) {
     return null;
