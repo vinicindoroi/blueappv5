@@ -430,9 +430,6 @@ export default function LoginScreen() {
           )}
         </UsefulContainer>
       </ScrollView>
-      
-      {/* Help Balloon - Always visible */}
-      <HelpBalloon />
     </KeyboardAvoidingView>
   );
 }
